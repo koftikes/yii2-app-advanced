@@ -13,13 +13,17 @@ return [
     'controllerNamespace' => 'console\controllers',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'controllerMap' => [
+        'migrate' => [
+            'class' => 'yii\console\controllers\MigrateController',
+            'templateFile' => '@sbs/template/migration.php',
+        ],
         'fixture' => [
             'class' => 'yii\console\controllers\FixtureController',
-            'namespace' => 'common\fixtures',
-          ],
+            'namespace' => 'console\fixtures',
+        ],
     ],
     'components' => [
         'log' => [
