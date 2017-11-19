@@ -1,23 +1,24 @@
 {
-    "name": "yiisoft/yii2-app-advanced",
-    "description": "Yii 2 Advanced Project Template",
+    "name": "sbs/yii2-sbs-kit",
+    "description": "Yii 2 SbS Starter Kit",
     "keywords": ["yii2", "framework", "advanced", "project template"],
-    "homepage": "http://www.yiiframework.com/",
+    "homepage": "https://github.com/koftikes/yii2-sbs-kit",
     "type": "project",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
-        "forum": "http://www.yiiframework.com/forum/",
-        "wiki": "http://www.yiiframework.com/wiki/",
-        "irc": "irc://irc.freenode.net/yii",
-        "source": "https://github.com/yiisoft/yii2"
+        "issues": "https://github.com/koftikes/yii2-sbs-kit/issues?state=open",
+        "wiki": "https://github.com/koftikes/yii2-sbs-kit/wiki",
+        "source": "https://github.com/koftikes/yii2-sbs-kit"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": "~2.0.6",
         "yiisoft/yii2-bootstrap": "~2.0.0",
-        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0"
+        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
+
+        "sbs/yii2-transliterator-helper": "^0.2.0",
+        "sbs/yii2-seo": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
@@ -29,10 +30,17 @@
     "config": {
         "process-timeout": 1800
     },
+    "scripts": {
+        "post-install-cmd": "php init --env=Development --overwrite=n"
+    },
     "repositories": [
         {
             "type": "composer",
             "url": "https://asset-packagist.org"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/koftikes/yii2-seo.git"
         }
     ]
 }
