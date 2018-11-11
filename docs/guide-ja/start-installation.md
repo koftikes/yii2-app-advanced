@@ -7,19 +7,22 @@
 
 ## Composer を使ってインストールする
 
-[Composer](http://getcomposer.org/) を持っていない場合は、決定版ガイドの [Yii をインストールする](https://github.com/yiisoft/yii2/blob/master/docs/guide-ja/start-installation.md#installing-via-composer) のセクションの指示に従ってインストールしてください。
+[Composer](http://getcomposer.org/) を持っていない場合は、決定版ガイドの [Yii をインストールする](https://github.com/yiisoft/yii2/blob/master/docs/guide-ja/start-installation.md#installing-via-composer)
+のセクションの指示に従ってインストールしてください。
 
 Composer がインストールされていれば、次のコマンドを使ってアプリケーションをインストールすることが出来ます。
 
     composer create-project --prefer-dist yiisoft/yii2-app-advanced yii-application
 
-のコマンドは `yii-application` という名前のディレクトリにアドバンスト・アプリケーションをインストールします。
+このコマンドは `yii-application` という名前のディレクトリにアドバンスト・アプリケーションをインストールします。
 望むなら別のディレクトリ名を選ぶことも出来ます。
 
+Bower と NPM の依存パッケージを Composer によって管理するために [asset-packagist](https://asset-packagist.org/) を使っています。以前のバージョンのように [asset-plugin](https://packagist.org/packages/fxp/composer-asset-plugin) を使うことも出来ますが、動作は低速です。
 
 ## アーカイブ・ファイルからインストールする
 
-[yiiframework.com](http://www.yiiframework.com/download/) からダウンロードしたアーカイブ・ファイルをウェブ・ルートの直下、`advanced` と名付けられたディレクトリに解凍します。
+[yiiframework.com](http://www.yiiframework.com/download/) からダウンロードしたアーカイブ・ファイルをウェブ・ルートの直下、
+`advanced` と名付けられたディレクトリに解凍します。
 
 その後は、次の項に記載されている指示に従ってください。
 
@@ -35,13 +38,13 @@ Composer がインストールされていれば、次のコマンドを使っ�
    /path/to/php-bin/php /path/to/yii-application/init
    ```
 
-   あるいは、本番サーバでは、非対話モードで `init` を実行します。
+   スクリプトで自動化する場合は、非対話モードで `init` を実行します。
 
    ```
-   /path/to/php-bin/php /path/to/yii-application/init --env=Production --overwrite=All
+   /path/to/php-bin/php /path/to/yii-application/init --env=Development --overwrite=All
    ```
 
-2. 新しいデータベースを作成し、それに従って `common/config/main-local.php` の `components['db']` の構成情報を修正します。
+2. 新しいデータベースを作成し、それに従って `/path/to/yii-application/common/config/main-local.php` の `components['db']` の構成情報を修正します。
 
 3. コンソール・ターミナルを開き、`/path/to/php-bin/php /path/to/yii-application/yii migrate` というコマンドでマイグレーションを適用します。
 
@@ -208,15 +211,12 @@ Composer がインストールされていれば、次のコマンドを使っ�
    127.0.0.1   backend.test
    ```
 
-
-アプリケーションにログインするためには、最初にユーザ登録をする必要があります。
-あなたの任意のメール・アドレス、ユーザ名、パスワードを指定してください。
+アプリケーションにログインするためには、最初にユーザ登録をする必要があります。あなたの任意のメール・アドレス、ユーザ名、パスワードを指定してください。
 そうすれば、同じメール・アドレスとパスワードを使って何時でもアプリケーションにログインすることが出来ます。
 
 
 > Note: `/` をフロントエンド、`/admin` をバックエンドにして、アドバンスト・テンプレートを単一のドメインで走らせたい場合は、
 > [共有ホスティング環境でアドバンスト・プロジェクト・テンプレートを使う](topic-shared-hosting.md) を参照して下さい。
-
 
 ## Vagrant を使ってインストールする
 
@@ -247,12 +247,10 @@ Composer がインストールされていれば、次のコマンドを使っ�
 5. 下記のコマンドを実行する
 
    ```bash
-   vagrant plugin install vagrant-hostmanager
    vagrant up
    ```
    
-これで全部です。後はただ完了するのを待つだけです。
-完了後には、次の URL でローカルのプロジェクトにアクセスすることが出来ます。
+これで全部です。後はただ完了するのを待つだけです。完了後には、次の URL でローカルのプロジェクトにアクセスすることが出来ます。
 * フロントエンド: http://y2aa-frontend.test
 * バックエンド: http://y2aa-backend.test
    
@@ -269,6 +267,7 @@ Composer がインストールされていれば、次のコマンドを使っ�
    * vagrant-local.example.yml` を `vagrant-local.yml` にコピーする
 
 6. 作成した GitHub personal API token を `vagrant-local.yml` に置く
+
 7. ターミナル (`cmd.exe`) を開き、 **プロジェクトのルート・ディレクトリに移動して** 次のコマンドを実行する
 
    ```bash
@@ -277,8 +276,7 @@ Composer がインストールされていれば、次のコマンドを使っ�
    
    (コマンド・プロンプトでディレクトリを移動する方法については、[ここ](http://www.wikihow.com/Change-Directories-in-Command-Prompt) を読んでください) 
 
-これで全部です。後はただ完了するのを待つだけです。
-完了後には、次の URL でローカルのプロジェクトにアクセスすることが出来ます。
+これで全部です。後はただ完了するのを待つだけです。完了後には、次の URL でローカルのプロジェクトにアクセスすることが出来ます。
 * フロントエンド: http://y2aa-frontend.test
 * バックエンド: http://y2aa-backend.test
 
