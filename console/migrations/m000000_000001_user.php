@@ -1,6 +1,6 @@
 <?php
 
-use common\models\User;
+use common\models\UserMaster;
 use common\models\UserProfile;
 use sbs\components\DbMigration;
 
@@ -11,10 +11,11 @@ class m000000_000001_user extends DbMigration
         $this->createTable('{{%user_master}}', [
             'id' => $this->primaryKey(),
             'email' => $this->string()->notNull()->unique(),
+            'email_confirm' => $this->string(32)->unique(),
             'auth_key' => $this->string(32)->notNull(),
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),
-            'status' => $this->smallInteger(1)->notNull()->defaultValue(User::STATUS_NOT_ACTIVE),
+            'status' => $this->smallInteger(1)->notNull()->defaultValue(UserMaster::STATUS_NOT_ACTIVE),
             'create_date' => $this->dateTime()->notNull(),
             'update_date' => $this->dateTime()->notNull(),
             'last_visit' => $this->dateTime(),

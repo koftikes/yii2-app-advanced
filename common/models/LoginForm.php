@@ -1,4 +1,5 @@
 <?php
+
 namespace common\models;
 
 use Yii;
@@ -9,8 +10,10 @@ use yii\base\Model;
  */
 class LoginForm extends Model
 {
-    public $username;
+    public $email;
+
     public $password;
+
     public $rememberMe = true;
 
     private $_user;
@@ -22,8 +25,8 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            // username and password are both required
-            [['username', 'password'], 'required'],
+            // email and password are both required
+            [['email', 'password'], 'required'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
@@ -36,7 +39,7 @@ class LoginForm extends Model
      * This method serves as the inline validation for password.
      *
      * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
+     * @param array  $params    the additional name-value pairs given in the rule
      */
     public function validatePassword($attribute, $params)
     {
@@ -58,19 +61,19 @@ class LoginForm extends Model
         if ($this->validate()) {
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
-        
+
         return false;
     }
 
     /**
      * Finds user by [[username]]
      *
-     * @return User|null
+     * @return UserMaster|null
      */
     protected function getUser()
     {
         if ($this->_user === null) {
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = UserMaster::findByEmail($this->email);
         }
 
         return $this->_user;

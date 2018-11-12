@@ -9,32 +9,33 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 /**
- * User model
+ * This is the model class for table "{{%user_master}}".
  *
- * @property integer $id
- * @property string $username
- * @property string $password_hash
- * @property string $password_reset_token
- * @property string $email
- * @property string $auth_key
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
+ * @property int         $id
+ * @property string      $email
+ * @property string      $email_confirm
+ * @property string      $auth_key
+ * @property string      $password_hash
+ * @property string      $password_reset_token
+ * @property int         $status
+ * @property string      $create_date
+ * @property string      $update_date
+ * @property string      $last_visit
+ *
+ * @property UserProfile $userProfile
  */
-class User extends ActiveRecord implements IdentityInterface
+class UserMaster extends ActiveRecord implements IdentityInterface
 {
-    const STATUS_DELETED = 0;
+    const STATUS_DELETED    = 0;
     const STATUS_NOT_ACTIVE = 1;
-    const STATUS_ACTIVE = 10;
-
+    const STATUS_ACTIVE     = 10;
 
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return '{{%user_master}}';
     }
 
     /**
@@ -61,6 +62,21 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
+    public function attributeLabels()
+    {
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserProfile()
+    {
+        return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public static function findIdentity($id)
     {
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
@@ -75,20 +91,22 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Finds user by username
+     * Finds user by email
      *
-     * @param string $username
+     * @param string $email
+     *
      * @return static|null
      */
-    public static function findByUsername($username)
+    public static function findByEmail($email)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
      * Finds user by password reset token
      *
      * @param string $token password reset token
+     *
      * @return static|null
      */
     public static function findByPasswordResetToken($token)
@@ -99,7 +117,7 @@ class User extends ActiveRecord implements IdentityInterface
 
         return static::findOne([
             'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
+            'status'               => self::STATUS_ACTIVE,
         ]);
     }
 
@@ -107,6 +125,7 @@ class User extends ActiveRecord implements IdentityInterface
      * Finds out if password reset token is valid
      *
      * @param string $token password reset token
+     *
      * @return bool
      */
     public static function isPasswordResetTokenValid($token)
@@ -116,7 +135,7 @@ class User extends ActiveRecord implements IdentityInterface
         }
 
         $timestamp = (int)substr($token, strrpos($token, '_') + 1);
-        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
+        $expire    = Yii::$app->params['user.passwordResetTokenExpire'];
 
         return $timestamp + $expire >= time();
     }
@@ -149,6 +168,7 @@ class User extends ActiveRecord implements IdentityInterface
      * Validates password
      *
      * @param string $password password to validate
+     *
      * @return bool if password provided is valid for current user
      */
     public function validatePassword($password)
@@ -160,6 +180,8 @@ class User extends ActiveRecord implements IdentityInterface
      * Generates password hash from password and sets it to the model
      *
      * @param string $password
+     *
+     * @throws \yii\base\Exception
      */
     public function setPassword($password)
     {
@@ -168,6 +190,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates "remember me" authentication key
+     *
+     * @throws \yii\base\Exception
      */
     public function generateAuthKey()
     {
@@ -176,6 +200,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates new password reset token
+     *
+     * @throws \yii\base\Exception
      */
     public function generatePasswordResetToken()
     {

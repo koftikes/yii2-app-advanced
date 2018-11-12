@@ -8,27 +8,27 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "{{%user_profile}}".
  *
- * @property integer $user_id
- * @property string $name
- * @property string $phone
- * @property integer $gender
- * @property string $DOB
- * @property integer $subscribe
- * @property string $info
+ * @property int        $user_id
+ * @property string     $name
+ * @property string     $phone
+ * @property string     $DOB
+ * @property int        $gender
+ * @property int        $subscribe
+ * @property string     $info
  *
- * @property User $user
+ * @property UserMaster $user
  */
 class UserProfile extends ActiveRecord
 {
-    const GENDER_THING = 0;
-    const GENDER_MALE = 1;
+    const GENDER_THING  = 0;
+    const GENDER_MALE   = 1;
     const GENDER_FEMALE = 2;
 
     const SUBSCRIBE_NOT_ACTIVE = 0;
-    const SUBSCRIBE_ACTIVE = 1;
+    const SUBSCRIBE_ACTIVE     = 1;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -36,7 +36,7 @@ class UserProfile extends ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -50,8 +50,8 @@ class UserProfile extends ActiveRecord
             [
                 ['user_id'],
                 'exist',
-                'skipOnError' => true,
-                'targetClass' => User::className(),
+                'skipOnError'     => true,
+                'targetClass'     => UserMaster::className(),
                 'targetAttribute' => ['user_id' => 'id'],
             ],
         ];
@@ -63,12 +63,12 @@ class UserProfile extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'name' => Yii::t('common', 'Full Name'),
-            'phone' => Yii::t('common', 'Phone'),
-            'gender' => Yii::t('common', 'Gender'),
-            'DOB' => Yii::t('common', 'DOB'),
+            'name'      => Yii::t('common', 'Full Name'),
+            'phone'     => Yii::t('common', 'Phone'),
+            'gender'    => Yii::t('common', 'Gender'),
+            'DOB'       => Yii::t('common', 'DOB'),
             'subscribe' => Yii::t('common', 'Subscribe'),
-            'info' => Yii::t('common', 'Info'),
+            'info'      => Yii::t('common', 'Info'),
         ];
     }
 
@@ -77,6 +77,6 @@ class UserProfile extends ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(UserMaster::className(), ['id' => 'user_id']);
     }
 }
